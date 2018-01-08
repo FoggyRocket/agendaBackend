@@ -16,7 +16,7 @@ class Task(models.Model):
 	text = models.TextField()
 	expiry = models.DateTimeField(auto_now_add=False, db_index=True)
 	starts = models.DateTimeField(auto_now_add=False,db_index=True)
-	created = models.DateTimeField(auto_now=True,db_index=True)
+	created = models.DateTimeField(auto_now_add=True,db_index=True)
 	status = models.CharField(max_length=100, choices=STATUS, default='Activo')
 	priority = models.CharField(max_length=100, choices=PRIORITY)
 	user = models.ForeignKey(User, related_name='tasks', on_delete='CASCADE', blank=True, null=True)

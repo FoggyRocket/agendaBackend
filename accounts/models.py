@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete='CASCADE')
+    full_name = models.CharField(max_length=140,blank=True, null=True)
     address = models.CharField(max_length=300)
     email= models.EmailField()
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,10}$',
