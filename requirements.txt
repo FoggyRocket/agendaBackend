@@ -1,0 +1,7 @@
+djangorestframework==3.7.7
+ez-setup==0.9
+Pillow==5.0.0
+pytz==2017.3
+virtualenv==15.1.0
+wxPython==3.0.2.0
+wxPython-common==3.0.2.0
