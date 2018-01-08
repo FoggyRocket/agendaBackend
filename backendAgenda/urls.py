@@ -25,6 +25,7 @@ urlpatterns = [
     #api
     url(r'^api/', include(router.urls)),
     url(r'^api/users/', include(accUrls, namespace='api-urls')),
+    url(r'^rest-auth/', include('rest_auth.urls')),
 
 
 ]
