@@ -163,3 +163,8 @@ STATICFILES_DIRS = (
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 CORS_ORIGIN_ALLOW_ALL=True
+
+#REST_AUTH_SERIALIZERS = {
+#    'LOGIN_SERIALIZER': 'accounts.serializers.UserLoginSerializer',
+#
+#}

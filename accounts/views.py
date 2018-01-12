@@ -2,10 +2,10 @@ from django.shortcuts import render
 from .models import Profile
 #api
 from rest_framework import viewsets
-from .serializers import ProfileSerializer,UserCreateSerializer,UserLoginSerializer
+from .serializers import ProfileSerializer,UserCreateSerializer,UserLoginSerializer, UserSerializer
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
-from rest_framework import permissions
+from rest_framework import permissions, views
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.permissions import (
@@ -48,3 +48,8 @@ class UserLoginAPIView(APIView):
             new_data = serializer.data
             return Response(new_data, status=HTTP_200_OK)
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+class UserView(views.APIView):
+    def get(self,request):
+        user=request.user
+        return Response(UserSerializer(user).data)

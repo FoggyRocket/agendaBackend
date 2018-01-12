@@ -15,7 +15,7 @@ from rest_framework.serializers import (
 class UserSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = User
-		fields = ['username', 'id']
+		fields = ['username', 'id','email','is_staff']
 
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
@@ -83,7 +83,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
 
 class UserLoginSerializer(serializers.ModelSerializer):
-    token = CharField(allow_blank=True, read_only=True)
+    #token = CharField(allow_blank=True, read_only=True)
     #username = CharField()
     email = EmailField(label='Email Address')
     class Meta:
@@ -92,11 +92,11 @@ class UserLoginSerializer(serializers.ModelSerializer):
             #'username',
             'email',
             'password',
-            'token',
 
         ]
         extra_kwargs = {"password":
                             {"write_only": True}
                             }
-    def validate(self, data):
-        return data
+    def validate(self, user):
+        user = None
+        return user
