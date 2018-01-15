@@ -164,7 +164,9 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 CORS_ORIGIN_ALLOW_ALL=True
 
-#REST_AUTH_SERIALIZERS = {
-#    'LOGIN_SERIALIZER': 'accounts.serializers.UserLoginSerializer',
-#
-#}
+REST_AUTH_SERIALIZERS = {
+        'PASSWORD_RESET_SERIALIZER': 'accounts.serializers.PasswordResetSerializer',
+}
+
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
