@@ -5,10 +5,10 @@ app_name = "accunts"
 
 from .views import (
     UserCreateAPIView,
-    UserView
+    TasksListForUserView
     )
 
 urlpatterns = [
     url(r'^register/$', UserCreateAPIView.as_view(), name='register'),
-    url(r'^user/',UserView.as_view()),
-]
+    url(r'^metasks/$', TasksListForUserView.as_view(),name='metasks'),
+    ]
