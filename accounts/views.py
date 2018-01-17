@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from .models import Profile
+from tasks.models import Task
+
 #api
 from rest_framework import viewsets
 from .serializers import ProfileSerializer,UserCreateSerializer, UserSerializer
+from tasks.serializers import TasksSerializer
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework import permissions, views
@@ -37,19 +40,16 @@ class UserCreateAPIView(CreateAPIView):
     queryset = User.objects.all()
     permission_classes = [AllowAny]
 
-#user View
+#user ViewSet
 class UserView(views.APIView):
     def get(self,request):
         user=request.user
         return Response(UserSerializer(user).data)
 
+
 #Rest password
 class PasswordResetView(GenericAPIView):
-    """
-    Calls Django Auth PasswordResetForm save method.
-    Accepts the following POST parameters: email
-    Returns the success/fail message.
-    """
+
     permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
@@ -63,3 +63,10 @@ class PasswordResetView(GenericAPIView):
             {"detail": _("Password reset e-mail has been sent.")},
             status=status.HTTP_200_OK
         )
+#Filtrado Tareas User
+class TasksListForUserView(ListAPIView):
+    serializer_class = TasksSerializer
+
+    def get_queryset(self):
+        user=self.request.user
+        return Task.objects.filter(user=user)

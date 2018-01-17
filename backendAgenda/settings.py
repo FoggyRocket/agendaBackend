@@ -140,8 +140,8 @@ REST_FRAMEWORK = {
     ),
 
     "DEFAULT_PERMISSION_CLASSES": (
-        'rest_framework.permissions.IsAuthenticated',
-        #'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        #'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ),
       'DEFAULT_AUTHENTICATION_CLASSES': (
       'rest_framework.authentication.TokenAuthentication',
@@ -166,6 +166,7 @@ CORS_ORIGIN_ALLOW_ALL=True
 
 REST_AUTH_SERIALIZERS = {
         'PASSWORD_RESET_SERIALIZER': 'accounts.serializers.PasswordResetSerializer',
+        'USER_DETAILS_SERIALIZER':'accounts.serializers.UserSerializer'
 }
 
 EMAIL_HOST = 'localhost'

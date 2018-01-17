@@ -2,6 +2,7 @@ from django.conf import settings
 from rest_framework import serializers
 from .models import Profile
 from django.contrib.auth.models import User
+from django.contrib.auth.tokens import default_token_generator
 from rest_framework.serializers import (
     CharField,
     EmailField,
