@@ -31,14 +31,15 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class UserCreateSerializer(serializers.ModelSerializer):
     email = EmailField(label='Email Address')
-    email2 = EmailField(label='Confirm Email')
+    password = serializers.CharField(write_only=True)
+    password2 = serializers.CharField(write_only=True)
     class Meta:
         model = User
         fields = [
             'username',
             'email',
-            'email2',
             'password',
+            'password2',
 
         ]
         extra_kwargs = {"password":
@@ -47,29 +48,30 @@ class UserCreateSerializer(serializers.ModelSerializer):
     def validate(self, data):
         return data
 
-
     def validate_email(self, value):
         data = self.get_initial()
-        email1 = data.get("email2")
-        email2 = value
-        if email1 != email2:
-            raise ValidationError("Los correos electrónicos deben coincidir.")
-
-        user_qs = User.objects.filter(email=email2)
+        email= value
+        user_qs = User.objects.filter(email=email)
         if user_qs.exists():
-	            raise ValidationError("Este usuario ya se ha registrado.")
+	            raise ValidationError("This user has already registered.")
 
         return value
 
-    def validate_email2(self, value):
+    def validate_password1(self, value):
         data = self.get_initial()
-        email1 = data.get("email")
-        email2 = value
-        if email1 != email2:
-            raise ValidationError("Los correos electrónicos deben coincidir.")
+        password1 = data.get("password2")
+        password2 = value
+        if password1 != password2:
+            raise ValidationError("Password does not match")
         return value
 
-
+    def validate_password2(self, value):
+        data = self.get_initial()
+        password1 = data.get("password")
+        password2 = value
+        if password1 != password2:
+            raise ValidationError("Password does not match")
+        return value
 
     def create(self, validated_data):
         username = validated_data['username']
