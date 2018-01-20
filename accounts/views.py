@@ -34,7 +34,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
 	serializer_class = ProfileSerializer
 
 
-
+#User register
 class UserCreateAPIView(CreateAPIView):
     serializer_class = UserCreateSerializer
     queryset = User.objects.all()
