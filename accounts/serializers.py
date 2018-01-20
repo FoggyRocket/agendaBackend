@@ -25,8 +25,18 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = '__all__'
-
-
+    def get_full_name(self, obj):
+        request = self.context['request']
+        return request.user.get_full_name()
+    def update(self, instance, validated_data):
+        #retrieve the user
+        user_data = validated_data.pop('user', None)
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.user.save()
+        instance.save()
+        return instance
+        
 
 
 class UserCreateSerializer(serializers.ModelSerializer):

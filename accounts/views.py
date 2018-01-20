@@ -3,12 +3,12 @@ from .models import Profile
 from tasks.models import Task
 
 #api
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 from .serializers import ProfileSerializer,UserCreateSerializer, UserSerializer
 from tasks.serializers import TasksSerializer
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
-from rest_framework import permissions, views
+from rest_framework import permissions, views, mixins
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from django.conf import settings
@@ -29,16 +29,21 @@ from rest_framework.generics import (
 
 
 # Create your views here.
-class ProfileViewSet(viewsets.ModelViewSet):
+class ProfileViewSet(mixins.ListModelMixin,
+                     mixins.RetrieveModelMixin,
+                     mixins.UpdateModelMixin,
+                     viewsets.GenericViewSet):
+
 	queryset = Profile.objects.all()
 	serializer_class = ProfileSerializer
+
 
 
 #User register
 class UserCreateAPIView(CreateAPIView):
     serializer_class = UserCreateSerializer
     queryset = User.objects.all()
-    permission_classes = [AllowAny]
+    permission_classes = [IsAdminUser]
 
 #user ViewSet
 class UserView(views.APIView):
@@ -70,3 +75,11 @@ class TasksListForUserView(ListAPIView):
     def get_queryset(self):
         user=self.request.user
         return Task.objects.filter(user=user)
+
+#Profile user by user
+class ProfileUserView(ListAPIView):
+    serializer_class = ProfileSerializer
+    permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        user=self.request.user
+        return Profile.objects.filter(user=user)
