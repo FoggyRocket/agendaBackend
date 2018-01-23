@@ -14,14 +14,6 @@ class Profile(models.Model):
     phone_number = models.CharField(validators=[phone_regex], max_length=10, blank=True)
     avatar = models.ImageField('avatar para tu perfil', upload_to='avatars/', blank=True, null=True)
 
-    @receiver(post_save, sender=User)
-    def create_user_profile(sender, instance, created, **kwargs):
-        if created:
-            Profile.objects.create(user=instance)
 
-    @receiver(post_save, sender=User)
-    def save_user_profile(sender, instance, **kwargs):
-        instance.profile.save()
-        
     def __str__(self):
         return self.user.username

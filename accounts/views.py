@@ -29,10 +29,7 @@ from rest_framework.generics import (
 
 
 # Create your views here.
-class ProfileViewSet(mixins.ListModelMixin,
-                     mixins.RetrieveModelMixin,
-                     mixins.UpdateModelMixin,
-                     viewsets.GenericViewSet):
+class ProfileViewSet(viewsets.ModelViewSet):
 
 	queryset = Profile.objects.all()
 	serializer_class = ProfileSerializer
@@ -78,8 +75,12 @@ class TasksListForUserView(ListAPIView):
 
 #Profile user by user
 class ProfileUserView(ListAPIView):
-    serializer_class = ProfileSerializer
     permission_classes = [IsAuthenticated]
-    def get_queryset(self):
-        user=self.request.user
-        return Profile.objects.filter(user=user)
+    def get(self, request):
+        profile, created= Profile.objects.get_or_create(user=request.user)
+        serializer = ProfileSerializer(profile, context={"request":request})
+        return Response(serializer.data)
+    def post(self, request):
+        profile, created= Profile.objects.get_or_create(user=request.user)
+        serializer= ProfileSerializer(profile)
+        return Response(serializer.data)
