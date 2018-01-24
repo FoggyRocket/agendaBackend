@@ -12,7 +12,7 @@ class Profile(models.Model):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,10}$',
                                  message="Ingresa los 10 digitos de tu celular")
     phone_number = models.CharField(validators=[phone_regex], max_length=10, blank=True)
-    avatar = models.ImageField('avatar para tu perfil', upload_to='avatars/', blank=True, null=True)
+    avatar = models.ImageField('avatar para tu perfil',default='avatars/avatar.png', upload_to='avatars/', blank=True, null=True)
 
 
     def __str__(self):

@@ -30,7 +30,9 @@ class ProfileSerializer(serializers.ModelSerializer):
     def get_avatar(self, profile ):
         request= self.context.get('request')
         avatar=profile.avatar.url
+
         return request.build_absolute_uri(avatar)
+
 
 
 
