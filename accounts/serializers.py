@@ -20,7 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = User
 		fields = ['username', 'id','email','is_staff']
-
+#ViewSet
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
     #avatar= serializers.SerializerMethodField()
