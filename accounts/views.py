@@ -73,7 +73,7 @@ class TasksListForUserView(ListAPIView):
         user=self.request.user
         return Task.objects.filter(user=user)
 
-#Profile user by user
+#Profile
 class ProfileUserView(ListAPIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):

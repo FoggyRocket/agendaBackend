@@ -23,15 +23,14 @@ class UserSerializer(serializers.ModelSerializer):
 
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
-    avatar= serializers.SerializerMethodField()
+    #avatar= serializers.SerializerMethodField()
     class Meta:
         model = Profile
         fields = '__all__'
-    def get_avatar(self, profile ):
-        request= self.context.get('request')
-        avatar=profile.avatar.url
-
-        return request.build_absolute_uri(avatar)
+    # def get_avatar(self, profile ):
+    #     request= self.context.get('request')
+    #     avatar=profile.avatar.url
+    #     return request.build_absolute_uri(avatar)
 
 
 
