@@ -13,10 +13,14 @@ from django.contrib.auth.views import password_reset_confirm
 from rest_framework import routers
 from tasks.views import TasksViewSet
 from accounts.views import ProfileViewSet
+from meeting.views import MeetingViewSet
+from project.views import ProjectViewSet
 
 router = routers.DefaultRouter()
 router.register(r'tasks', TasksViewSet)
 router.register(r'profile', ProfileViewSet)
+router.register(r'meeting',MeetingViewSet)
+router.register(r'project',ProjectViewSet)
 
 urlpatterns = [
     url(
