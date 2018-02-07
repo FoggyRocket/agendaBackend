@@ -8,6 +8,6 @@ class Meeting(models.Model):
     meeting_date = models.DateTimeField(auto_now_add=False,db_index=True)
     created = models.DateTimeField(auto_now_add=True,db_index=True)
     user = models.ForeignKey(User, related_name='project',limit_choices_to={'is_staff': True}, on_delete='CASCADE', blank=True, null=True)
-    participants = models.ManyToManyField(Profile)
+    participants = models.ManyToManyField(Profile, blank=True)
     def __str__(self):
         return self.name

@@ -10,12 +10,13 @@ class UserSerializer(serializers.ModelSerializer):
 		fields = ['username', 'id']
 
 class ProfileSerializer(serializers.ModelSerializer):
+	user= UserSerializer(many=False, read_only=True)
 	class Meta:
 		model = Profile
-		fields = ['id','avatar','username']
+		fields = ['id','avatar','user']
 
 class MeetingSerializer(serializers.ModelSerializer):
-	user = UserSerializer(many=False, read_only=True)
+	user = UserSerializer(many=False, read_only=True, default=serializers.CurrentUserDefault())
 	participants = ProfileSerializer(many=True, read_only=True)
 	class Meta:
 		model = Meeting

@@ -12,5 +12,5 @@ class MeetingSerializer(serializers.ModelSerializer):
 class ProjectSerializer(serializers.ModelSerializer):
 	meeting = MeetingSerializer(many=False, read_only=True)
 	class Meta:
-		model = Meeting
+		model = Project
 		fields = '__all__'
