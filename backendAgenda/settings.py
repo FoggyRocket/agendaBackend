@@ -173,3 +173,6 @@ REST_AUTH_SERIALIZERS = {
 
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
+
+#Format date
+DATE_INPUT_FORMATS = ['%Y-%m-%d %H:%M:%S']
