@@ -173,3 +173,5 @@ REST_AUTH_SERIALIZERS = {
 
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
+
+#

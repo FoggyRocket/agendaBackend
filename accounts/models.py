@@ -8,7 +8,7 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete='CASCADE')
     full_name = models.CharField(max_length=140,blank=True, null=True)
-    address = models.CharField(max_length=300)
+    address = models.CharField(max_length=300, blank=True, null=True)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,10}$',
                                  message="Ingresa los 10 digitos de tu celular")
     phone_number = models.CharField(validators=[phone_regex], max_length=10, blank=True)

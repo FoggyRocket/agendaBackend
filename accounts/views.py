@@ -43,6 +43,10 @@ class UserCreateAPIView(CreateAPIView):
     permission_classes = [IsAdminUser]
 
 #user ViewSet
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class= UserSerializer
+
 class UserView(views.APIView):
     def get(self,request):
         user=request.user
@@ -74,7 +78,7 @@ class TasksListForUserView(ListAPIView):
         return Task.objects.filter(user=user)
 
 #Profile
-class ProfileUserView(ListAPIView):
+class ProfileUserView(GenericAPIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
         profile, created= Profile.objects.get_or_create(user=request.user)
