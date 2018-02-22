@@ -19,7 +19,6 @@ class MeetingSerilizer(serializers.ModelSerializer):
 		model = Meeting
 		fields = ['id', 'name']
 class BasicTasksSerializer(serializers.ModelSerializer):
-	user = UserSerializer(many=False, read_only=True)
 	profile = ProfileSerializer(many=False, read_only=True)
 	class Meta:
 		model = Task
