@@ -14,6 +14,10 @@ class ProfileSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Profile
 		fields = ['id','avatar','user']
+class BasicMeetingSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Meeting
+		fields = '__all__'
 
 class MeetingSerializer(serializers.ModelSerializer):
 	user = UserSerializer(many=False, read_only=True, default=serializers.CurrentUserDefault())

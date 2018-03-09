@@ -2,12 +2,19 @@ from django.shortcuts import render
 from .models import Meeting, Files, Order, Note, Action
 #api
 from rest_framework import viewsets
-from .serializers import MeetingSerializer,FileSerializer,BasicFilesSerializer, BasicOrderSerializer, OrderSerializer, BasicNoteSerializer, NoteSerializer, BasicActionSerializer,ActionSerializer
+from .serializers import BasicMeetingSerializer, MeetingSerializer,FileSerializer,BasicFilesSerializer, BasicOrderSerializer, OrderSerializer, BasicNoteSerializer, NoteSerializer, BasicActionSerializer,ActionSerializer
 
 # Create your views here.
 class MeetingViewSet(viewsets.ModelViewSet):
 	queryset = Meeting.objects.all()
 	serializer_class = MeetingSerializer
+
+	def get_serializer_class(self):
+		if self.action == 'list':
+			return MeetingSerializer
+		if self.action == 'retrive':
+			return MeetingSerializer
+		return MeetingSerializer
 
 
 class FileViewSet(viewsets.ModelViewSet):
