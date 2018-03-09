@@ -19,7 +19,7 @@ from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 class UserSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = User
-		fields = ['username', 'id','email','is_staff']
+		fields = ['username', 'id','email','is_staff','is_superuser']
 #ViewSet
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
