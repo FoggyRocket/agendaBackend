@@ -40,7 +40,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
 class UserCreateAPIView(CreateAPIView):
     serializer_class = UserCreateSerializer
     queryset = User.objects.all()
-    permission_classes = [IsAdminUser]
+    #permission_classes = [IsAdminUser]
 
 #user ViewSet
 class UserViewSet(viewsets.ModelViewSet):

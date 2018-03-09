@@ -23,14 +23,9 @@ class UserSerializer(serializers.ModelSerializer):
 #ViewSet
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
-    #avatar= serializers.SerializerMethodField()
     class Meta:
         model = Profile
         fields = '__all__'
-    # def get_avatar(self, profile ):
-    #     request= self.context.get('request')
-    #     avatar=profile.avatar.url
-    #     return request.build_absolute_uri(avatar)
 
 
 
@@ -39,6 +34,8 @@ class UserCreateSerializer(serializers.ModelSerializer):
     email = EmailField(label='Email Address')
     password = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
+    is_staff = serializers.BooleanField(default=False)
+    is_superuser = serializers.BooleanField(default=False)
     class Meta:
         model = User
         fields = [
@@ -46,6 +43,8 @@ class UserCreateSerializer(serializers.ModelSerializer):
             'email',
             'password',
             'password2',
+            'is_staff',
+            'is_superuser',
 
         ]
         extra_kwargs = {"password":
@@ -83,9 +82,13 @@ class UserCreateSerializer(serializers.ModelSerializer):
         username = validated_data['username']
         email = validated_data['email']
         password = validated_data['password']
+        is_staff = validated_data['is_staff']
+        is_superuser = validated_data['is_superuser']
         user_obj = User(
                 username = username,
-                email = email
+                email = email,
+                is_staff = is_staff,
+                is_superuser = is_superuser
             )
         user_obj.set_password(password)
         user_obj.save()

@@ -1,13 +1,20 @@
 from django.shortcuts import render
-from .models import Meeting, Files, Action, Note
+from .models import Meeting, Files, Order, Note, Action
 #api
 from rest_framework import viewsets
-from .serializers import MeetingSerializer,FileSerializer,BasicFilesSerializer, BasicActionSerializer, ActionSerializer, BasicNoteSerializer, NoteSerializer
+from .serializers import BasicMeetingSerializer, MeetingSerializer,FileSerializer,BasicFilesSerializer, BasicOrderSerializer, OrderSerializer, BasicNoteSerializer, NoteSerializer, BasicActionSerializer,ActionSerializer
 
 # Create your views here.
 class MeetingViewSet(viewsets.ModelViewSet):
 	queryset = Meeting.objects.all()
 	serializer_class = MeetingSerializer
+
+	def get_serializer_class(self):
+		if self.action == 'list':
+			return MeetingSerializer
+		if self.action == 'retrive':
+			return MeetingSerializer
+		return MeetingSerializer
 
 
 class FileViewSet(viewsets.ModelViewSet):
@@ -21,16 +28,16 @@ class FileViewSet(viewsets.ModelViewSet):
 			return BasicFilesSerializer
 		return BasicFilesSerializer
 
-class ActionViewSet(viewsets.ModelViewSet):
-	queryset = Action.objects.all()
-	serializer_class = ActionSerializer
+class OrderViewSet(viewsets.ModelViewSet):
+	queryset = Order.objects.all()
+	serializer_class = OrderSerializer
 
 	def get_serializer_class(self):
 		if self.action == 'list':
-			return ActionSerializer
+			return OrderSerializer
 		if self.action == 'retrive':
-			return ActionSerializer
-		return BasicActionSerializer
+			return OrderSerializer
+		return BasicOrderSerializer
 
 class NoteViewSet(viewsets.ModelViewSet):
 	queryset = Note.objects.all()
@@ -42,3 +49,14 @@ class NoteViewSet(viewsets.ModelViewSet):
 		if self.action == 'retrive':
 			return NoteSerializer
 		return BasicNoteSerializer
+
+class ActionViewSet(viewsets.ModelViewSet):
+	queryset = Action.objects.all()
+	serializer_class = ActionSerializer
+
+	def get_serializer_class(self):
+		if self.action == 'list':
+			return ActionSerializer
+		if self.action == 'retrive':
+			return ActionSerializer
+		return BasicActionSerializer

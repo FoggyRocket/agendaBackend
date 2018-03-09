@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Meeting,Files,Action,Note
+from .models import Meeting,Files,Order,Note, Action
 from django.contrib.auth.models import User
 from accounts.models import Profile
 
@@ -14,6 +14,10 @@ class ProfileSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Profile
 		fields = ['id','avatar','user']
+class BasicMeetingSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Meeting
+		fields = '__all__'
 
 class MeetingSerializer(serializers.ModelSerializer):
 	user = UserSerializer(many=False, read_only=True, default=serializers.CurrentUserDefault())
@@ -37,15 +41,15 @@ class BasicFilesSerializer(serializers.ModelSerializer):
 		model = Files
 		fields = '__all__'
 
-class BasicActionSerializer(serializers.ModelSerializer):
+class BasicOrderSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = Action
+		model = Order
 		fields = '__all__'
 
-class ActionSerializer(serializers.ModelSerializer):
+class OrderSerializer(serializers.ModelSerializer):
 	meeting = BasicMeetinSerializer(many=False, read_only=True)
 	class Meta:
-		model = Action
+		model = Order
 		fields = '__all__'
 
 class BasicNoteSerializer(serializers.ModelSerializer):
@@ -58,4 +62,16 @@ class NoteSerializer(serializers.ModelSerializer):
 	autor = ProfileSerializer(many=False, read_only=True)
 	class Meta:
 		model = Note
+		fields = '__all__'
+
+class BasicActionSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Action
+		fields = '__all__'
+
+class ActionSerializer(serializers.ModelSerializer):
+	meeting = BasicMeetinSerializer(many=False, read_only=True)
+	user = UserSerializer(many=False, read_only=True)
+	class Meta:
+		model = Action
 		fields = '__all__'
