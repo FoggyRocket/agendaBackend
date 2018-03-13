@@ -1,0 +1,125 @@
+PRIMER SÁBADO
+
+sudo apt-get install 
+
+
+2-.https://github.com/robbyrussell/oh-my-zsh
+
+para usar oythonb:
+
+	python3 
+
+IDENTACIÓN
+
+-----------------------
+
+python3 nombre del archivo.py 
+
+INSTALAR ENV
+
+sudo apt-get install env ??
+
+1.-//CREAR UN ENTORNO
+
+python3 -m venv Nombre_entorno
+virtualenv -p python courenv  
+
+2.-//ACTIVAR ENTORNO
+
+source entorno/bin/activate
+
+3.-//INSTALAR LIBRERIAS
+
+pip install django
+
+4.- //saber que librerias tengo en el proyecto
+pip freeze
+
+5.-//CREAR PROYECTO DJANGO
+django-admin startproject project1
+
+6.-//DENTRO DE PROYECTO
+./manage.py runserver
+
+7.-// ABRIR LOCALHOST
+
+8.-//DESACTIVAR ENTORNO
+
+deactivate
+
+
+******
+quitar error de migraciones
+./manage.py migrate
+crear usuarios
+./mange.py createsuperuser
+
+********++
+
+crear nueva app django
+
+./manage.py startapp personajes
+
+
+******************
+
+./manage.py makemigrations
+./manage.py migrate
+
+*****************************
+
+para saber que dependencias se usan en la app
+pip freeze > requirements.txt
+
+******
+para instalar dependencias guardadas en el txt
+pip install -r requirements.txt
+
+**************************************************************
+video 
+redux
+https://www.facebook.com/Centraal/videos/1280154048756267/
+***********************************************************************
+
+google calendar
+
+fase 1 
+ semana busquedas por semanas
+modales
+celda 
+
+tras en base 
+
+
+//////////////////////////////////
+
+
+hacer fork
+
+git clone "Clonar el mio"
+pull request
+
+seguir con django y react-native ();
+
+allende{
+    generar codigo
+    leer codigo
+}
+
+                        Aliada.com
+
+python -m smtpd -n -c DebuggingServer localhost:1025
+
+
+
+git remote add upstream linkd_del prouecto del fixter
+
+git fecth upstream //agregar nuevo remoto
+//solo una vez
+
+git pull upstream rama_de_cambios
+
+
+
+
+

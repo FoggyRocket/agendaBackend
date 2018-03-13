@@ -1,0 +1,43 @@
+MONGO DB
+
+
+CREAR DB
+
+	use nombre_de_db
+	
+MOSTRAR DBS
+	show dbs
+
+Usar mongo
+        terminal~ mong
+o
+
+INSERTAR DATOS (USUARIOS)
+	db.users.insert({'name': 'Jose'})
+
+***ESTAR EN DB
+	use nombre_de_db
+
+	db.users.find() //ARROJA CAMPOS DE USERS
+
+	db.users.count() //CUANTOS ELEMENTOS EXISTEN
+
+
+
+******CORRER MONGO
+	sudo service mongod start
+
+******DETENER
+	sudo service mongod stop
+
+******STATUS
+	service mongod status
+	
+
+**SALIR 
+	exit
+	ctrl+C
+
+******* Modificar un elemento desde mongo 
+
+
