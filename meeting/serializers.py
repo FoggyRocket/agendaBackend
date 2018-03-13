@@ -17,8 +17,8 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class MeetingSerializer(serializers.ModelSerializer):
 	user = UserSerializer(many=False, read_only=True, default=serializers.CurrentUserDefault())
-	participants = ProfileSerializer(many=True, read_only=True)
-	participants_id=serializers.PrimaryKeyRelatedField(many=True, write_only=True, queryset=Profile.objects.all())
+	participants = ProfileSerializer(many=True, read_only=True, allow_null=True)
+	participants_id=serializers.PrimaryKeyRelatedField(many=True, write_only=True, queryset=Profile.objects.all(),allow_null = True)
 	class Meta:
 		model = Meeting
 		fields = '__all__'

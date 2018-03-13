@@ -7,6 +7,6 @@ class Project(models.Model):
 
     name_project = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True,db_index=True)
-    meeting = models.ForeignKey(Meeting, related_name='meeting', on_delete='CASCADE', blank=True, null=True)
+    meeting = models.ForeignKey(Meeting, related_name='meeting', on_delete=models.CASCADE, blank=True, null=True)
     def __str__(self):
         return self.name_project
