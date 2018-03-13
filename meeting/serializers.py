@@ -14,14 +14,25 @@ class ProfileSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Profile
 		fields = ['id','avatar','user']
-class BasicMeetingSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Meeting
-		fields = '__all__'
 
 class MeetingSerializer(serializers.ModelSerializer):
 	user = UserSerializer(many=False, read_only=True, default=serializers.CurrentUserDefault())
 	participants = ProfileSerializer(many=True, read_only=True)
+	participants_id=serializers.PrimaryKeyRelatedField(many=True, write_only=True, queryset=Profile.objects.all())
+	class Meta:
+		model = Meeting
+		fields = '__all__'
+	def create(self,validated_data):
+		print(validated_data)
+		participants=validated_data.pop('participants_id')
+		meeting= Meeting.objects.create(**validated_data)
+		for p in participants:
+			meeting.participants.add(p)
+		return meeting
+class EditMeetingSerializer(serializers.ModelSerializer):
+	user = UserSerializer(many=False, read_only=True, default=serializers.CurrentUserDefault())
+	participants = ProfileSerializer(many=True, read_only=True)
+	participants_id=serializers.PrimaryKeyRelatedField(many=True, write_only=True, queryset=Profile.objects.all(), source="participants")
 	class Meta:
 		model = Meeting
 		fields = '__all__'
