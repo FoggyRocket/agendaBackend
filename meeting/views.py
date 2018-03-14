@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import Meeting, Files, Order, Note, Action
 #api
 from rest_framework import viewsets
-from .serializers import  EditMeetingSerializer,MeetingSerializer,FileSerializer,BasicFilesSerializer, BasicOrderSerializer, OrderSerializer, BasicNoteSerializer, NoteSerializer, BasicActionSerializer,ActionSerializer
+from .serializers import  EditMeetingSerializer,MeetingSerializer,FileSerializer,EditFilesSerializer, EditOrderSerializer, OrderSerializer, EditNoteSerializer, NoteSerializer, EditActionSerializer,ActionSerializer
 
 # Create your views here.
 class MeetingViewSet(viewsets.ModelViewSet):
@@ -22,41 +22,41 @@ class FileViewSet(viewsets.ModelViewSet):
 	serializer_class = FileSerializer
 
 	def get_serializer_class(self):
-		if self.action == 'list':
-			return FileSerializer
-		if self.action == 'retrive':
-			return BasicFilesSerializer
-		return BasicFilesSerializer
+		if self.action == 'update':
+			return EditFilesSerializer
+		if self.action == 'partial_update':
+			return EditFilesSerializer
+		return FileSerializer
 
 class OrderViewSet(viewsets.ModelViewSet):
 	queryset = Order.objects.all()
 	serializer_class = OrderSerializer
 
 	def get_serializer_class(self):
-		if self.action == 'list':
-			return OrderSerializer
-		if self.action == 'retrive':
-			return OrderSerializer
-		return BasicOrderSerializer
+		if self.action == 'update':
+			return EditOrderSerializer
+		if self.action == 'partial_update':
+			return EditOrderSerializer
+		return OrderSerializer
 
 class NoteViewSet(viewsets.ModelViewSet):
 	queryset = Note.objects.all()
 	serializer_class = NoteSerializer
 
 	def get_serializer_class(self):
-		if self.action == 'list':
-			return NoteSerializer
-		if self.action == 'retrive':
-			return NoteSerializer
-		return BasicNoteSerializer
+		if self.action == 'update':
+			return EditNoteSerializer
+		if self.action == 'partial_update':
+			return EditNoteSerializer
+		return NoteSerializer
 
 class ActionViewSet(viewsets.ModelViewSet):
 	queryset = Action.objects.all()
 	serializer_class = ActionSerializer
 
 	def get_serializer_class(self):
-		if self.action == 'list':
-			return ActionSerializer
-		if self.action == 'retrive':
-			return ActionSerializer
-		return BasicActionSerializer
+		if self.action == 'update':
+			return EditActionSerializer
+		if self.action == 'partial_update':
+			return EditActionSerializer
+		return ActionSerializer
