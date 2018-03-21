@@ -38,3 +38,9 @@ class EditProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = '__all__'
+
+
+class BasicProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields= '__all__'

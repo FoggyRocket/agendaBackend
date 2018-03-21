@@ -10,7 +10,7 @@ class Project(models.Model):
     created_date = models.DateField(auto_now=False,auto_now_add=False, db_index=True, default=date.today)
     due_date = models.DateField(auto_now=False, auto_now_add=False, default=date.today)
     isCompleted = models.BooleanField(default=False)
-    user = models.ForeignKey(User, related_name='project', limit_choices_to={'is_staff': True},
+    user = models.ForeignKey(User, related_name='projects', limit_choices_to={'is_staff': True},
                              on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
