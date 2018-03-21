@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from .models import Profile
+from .models import Profile,FastNote
 from tasks.models import Task
 
 #api
 from rest_framework import viewsets, mixins
-from .serializers import ProfileSerializer,UserCreateSerializer, UserSerializer
+from .serializers import ProfileSerializer,UserCreateSerializer, UserSerializer,FastNoteSerializer,EditFastNoteSerializer
 from tasks.serializers import TasksSerializer
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
@@ -88,3 +88,15 @@ class ProfileUserView(GenericAPIView):
         profile, created= Profile.objects.get_or_create(user=request.user)
         serializer= ProfileSerializer(profile)
         return Response(serializer.data)
+
+"Fast note"
+class FastNoteViewSet(viewsets.ModelViewSet):
+	queryset = FastNote.objects.all()
+	serializer_class = FastNoteSerializer
+
+	def get_serializer_class(self):
+		if self.action == 'update':
+			return EditFastNoteSerializer
+		if self.action == 'partial_update':
+			return EditFastNoteSerializer
+		return FastNoteSerializer

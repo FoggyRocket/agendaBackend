@@ -1,6 +1,6 @@
 from django.conf import settings
 from rest_framework import serializers
-from .models import Profile
+from .models import Profile, FastNote
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from rest_framework.serializers import (
@@ -16,10 +16,16 @@ from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 
 
 
+
 class UserSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = User
 		fields = ['username', 'id','email','is_staff','is_superuser']
+
+class BasicUserlserializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username']
 #ViewSet
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)
@@ -125,3 +131,20 @@ class PasswordResetSerializer(serializers.Serializer):
 
         opts.update(self.get_email_options())
         self.reset_form.save(**opts)
+
+class EditFastNoteSerializer(serializers.ModelSerializer):
+	user = BasicUserlserializer(many=False, read_only=True,allow_null = True)
+	class Meta:
+		model = FastNote
+		fields = '__all__'
+
+class FastNoteSerializer(serializers.ModelSerializer):
+	user = BasicUserlserializer(many=False, read_only=True, default=serializers.CurrentUserDefault())
+	class Meta:
+		model = FastNote
+		fields = '__all__'
+
+	def create(self,validated_data):
+		fastnote= FastNote.objects.create(**validated_data)
+
+		return fastnote
