@@ -12,6 +12,5 @@ class Project(models.Model):
     isCompleted = models.BooleanField(default=False)
     user = models.ForeignKey(User, related_name='project', limit_choices_to={'is_staff': True},
                              on_delete=models.CASCADE, blank=True, null=True)
-
     def __str__(self):
         return self.name_project

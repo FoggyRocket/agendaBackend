@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import Task
 #api
 from rest_framework import viewsets
-from .serializers import TasksSerializer, BasicTasksSerializer
+from .serializers import TasksSerializer, EditTasksSerializer
 
 # Create your views here.
 class TasksViewSet(viewsets.ModelViewSet):
@@ -10,8 +10,8 @@ class TasksViewSet(viewsets.ModelViewSet):
 	serializer_class = TasksSerializer
 
 	def get_serializer_class(self):
-		if self.action == 'list':
-			return TasksSerializer
-		if self.action == 'retrive':
-			return BasicTasksSerializer
-		return BasicTasksSerializer
+		if self.action == 'update':
+			return EditTasksSerializer
+		if self.action == 'partial_update':
+			return EditTasksSerializer
+		return TasksSerializer
