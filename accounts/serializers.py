@@ -16,7 +16,6 @@ from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 
 
 
-
 class UserSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = User
