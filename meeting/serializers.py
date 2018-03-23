@@ -2,6 +2,8 @@ from rest_framework import serializers
 from .models import Meeting,Files,Order,Note, Action
 from django.contrib.auth.models import User
 from accounts.models import Profile
+from tasks.models import Task
+
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -9,6 +11,11 @@ class UserSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = User
 		fields = ['username', 'id']
+class BasicTasksSerializer(serializers.ModelSerializer):
+	user= UserSerializer(many=False, read_only=True)
+	class Meta:
+		model = Task
+		fields = '__all__'
 
 class ProfileSerializer(serializers.ModelSerializer):
 	user= UserSerializer(many=False, read_only=True)
@@ -21,6 +28,7 @@ class MeetingSerializer(serializers.ModelSerializer):
 	user = UserSerializer(many=False, read_only=True, default=serializers.CurrentUserDefault())
 	participants = ProfileSerializer(many=True, read_only=True, allow_null=True)
 	participants_id=serializers.PrimaryKeyRelatedField(many=True, write_only=True, queryset=Profile.objects.all(),allow_null = True)
+	tasks=BasicTasksSerializer(many=True, read_only=True)
 
 	class Meta:
 		model = Meeting
