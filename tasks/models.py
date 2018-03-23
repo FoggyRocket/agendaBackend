@@ -12,9 +12,9 @@ class Task(models.Model):
 	('Vencido','Vencido')
 	)
 	PRIORITY=(
-	('Alta','Alta'),
-	('Media','Media'),
-	('Baja','Baja')
+	('Alta','Q3'),
+	('Media','Q2'),
+	('Baja','Q1')
 	)
 	name =models.CharField(max_length=100, blank=True,null=True)
 	text = models.TextField(blank=True,null=True)
