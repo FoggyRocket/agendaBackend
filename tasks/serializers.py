@@ -10,24 +10,32 @@ class UserSerializer(serializers.ModelSerializer):
 		model = User
 		fields = ['username', 'id']
 
-class ProfileSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Profile
-		fields = ['user.username']
-class MeetingSerilizer(serializers.ModelSerializer):
+class MeetingSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Meeting
 		fields = ['id', 'name']
-class BasicTasksSerializer(serializers.ModelSerializer):
-	profile = ProfileSerializer(many=False, read_only=True)
+
+class EditTasksSerializer(serializers.ModelSerializer):
+	meeting = MeetingSerializer(many=False, read_only=True)
+	user = UserSerializer(many=False, read_only=True,allow_null = True)
+	meeting_id=serializers.PrimaryKeyRelatedField(many=False,write_only=True, queryset=Meeting.objects.all(), source="meeting")
+	user_id=serializers.PrimaryKeyRelatedField(many=False,write_only=True, queryset=User.objects.all(),source="user",allow_null = True)
 	class Meta:
 		model = Task
 		fields = '__all__'
 
 class TasksSerializer(serializers.ModelSerializer):
-	user = UserSerializer(many=False, read_only=True)
-	profile = ProfileSerializer(many=True, read_only=True)
-	meeting = MeetingSerilizer(many=False, read_only=True)
+	meeting = MeetingSerializer(many=False, read_only=True)
+	user = UserSerializer(many=False, read_only=True,allow_null = True)
+	meeting_id=serializers.PrimaryKeyRelatedField(many=False,write_only=True, queryset=Meeting.objects.all())
+	user_id=serializers.PrimaryKeyRelatedField(many=False,write_only=True, queryset=User.objects.all(),allow_null = True)
 	class Meta:
 		model = Task
 		fields = '__all__'
+	def create(self,validated_data):
+		print(validated_data)
+		meeting=validated_data.pop('meeting_id')
+		user=validated_data.pop('user_id')
+		task= Task.objects.create(meeting=meeting,user=user,**validated_data)
+
+		return task

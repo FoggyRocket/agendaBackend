@@ -20,3 +20,11 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class FastNote(models.Model):
+
+    user = models.ForeignKey(User, related_name='fastnote',on_delete=models.CASCADE)
+    text = models.TextField()
+    created = models.DateTimeField(auto_now_add=True,db_index=True)
+    def __str__(self):
+        return self.text
