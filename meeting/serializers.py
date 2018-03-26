@@ -11,11 +11,6 @@ class UserSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = User
 		fields = ['username', 'id']
-class BasicTasksSerializer(serializers.ModelSerializer):
-	user= UserSerializer(many=False, read_only=True)
-	class Meta:
-		model = Task
-		fields = '__all__'
 
 class ProfileSerializer(serializers.ModelSerializer):
 	user= UserSerializer(many=False, read_only=True)
@@ -24,37 +19,38 @@ class ProfileSerializer(serializers.ModelSerializer):
 		model = Profile
 		fields = ['id','avatar','user']
 
-class MeetingSerializer(serializers.ModelSerializer):
-	user = UserSerializer(many=False, read_only=True, default=serializers.CurrentUserDefault())
-	participants = ProfileSerializer(many=True, read_only=True, allow_null=True)
-	participants_id=serializers.PrimaryKeyRelatedField(many=True, write_only=True, queryset=Profile.objects.all(),allow_null = True)
-	tasks=BasicTasksSerializer(many=True, read_only=True)
+"basic serializers"
 
+class BasicTasksSerializer(serializers.ModelSerializer):
+	user= UserSerializer(many=False, read_only=True)
 	class Meta:
-		model = Meeting
+		model = Task
 		fields = '__all__'
-
-	def create(self,validated_data):
-		print(validated_data)
-		participants=validated_data.pop('participants_id')
-		meeting= Meeting.objects.create(**validated_data)
-		for p in participants:
-			meeting.participants.add(p)
-		return meeting
-
-class EditMeetingSerializer(serializers.ModelSerializer):
-	user = UserSerializer(many=False, read_only=True, default=serializers.CurrentUserDefault())
-	participants = ProfileSerializer(many=True, read_only=True)
-	participants_id=serializers.PrimaryKeyRelatedField(many=True, write_only=True, queryset=Profile.objects.all(), source="participants")
-
+class BasicNoteSerializer(serializers.ModelSerializer):
+	autor=ProfileSerializer(many=False,read_only=True)
 	class Meta:
-		model = Meeting
-		fields = '__all__'
+		model= Note
+		fields = ["id","autor","text","created"]
+
+class BasicOrderSerializer(serializers.ModelSerializer):
+	class Meta:
+		model= Order
+		fields = ["id","name_order","created","status"]
+class BasicActionSerializer(serializers.ModelSerializer):
+	user=UserSerializer(many=False,read_only=True)
+	class Meta:
+		model=Action
+		fields =["id","user","text","created"]
 
 class BasicMeetingSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Meeting
 		fields = ['name', 'id']
+
+
+
+
+
 
 class FileSerializer(serializers.ModelSerializer):
 	meeting = BasicMeetingSerializer(many=False, read_only=True)
@@ -147,3 +143,34 @@ class ActionSerializer(serializers.ModelSerializer):
 		action= Action.objects.create(meeting=meeting,user=user,**validated_data)
 
 		return action
+
+class MeetingSerializer(serializers.ModelSerializer):
+	user = UserSerializer(many=False, read_only=True, default=serializers.CurrentUserDefault())
+	participants = ProfileSerializer(many=True, read_only=True, allow_null=True)
+	participants_id=serializers.PrimaryKeyRelatedField(many=True, write_only=True, queryset=Profile.objects.all(),allow_null = True)
+	tasks=BasicTasksSerializer(many=True, read_only=True)
+	notes=BasicNoteSerializer(many=True, read_only=True)
+	order=BasicOrderSerializer(many=True, read_only=True)
+	files=FileSerializer(many=True, read_only=True)
+	action=BasicActionSerializer(many=True, read_only=True)
+
+	class Meta:
+		model = Meeting
+		fields = '__all__'
+
+	def create(self,validated_data):
+		print(validated_data)
+		participants=validated_data.pop('participants_id')
+		meeting= Meeting.objects.create(**validated_data)
+		for p in participants:
+			meeting.participants.add(p)
+		return meeting
+
+class EditMeetingSerializer(serializers.ModelSerializer):
+	user = UserSerializer(many=False, read_only=True, default=serializers.CurrentUserDefault())
+	participants = ProfileSerializer(many=True, read_only=True)
+	participants_id=serializers.PrimaryKeyRelatedField(many=True, write_only=True, queryset=Profile.objects.all(), source="participants")
+
+	class Meta:
+		model = Meeting
+		fields = '__all__'
