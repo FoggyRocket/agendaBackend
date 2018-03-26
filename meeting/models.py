@@ -18,7 +18,7 @@ class Files(models.Model):
 
     name_file = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True,db_index=True)
-    meeting = models.ForeignKey(Meeting, related_name='file', on_delete=models.CASCADE, blank=True, null=True)
+    meeting = models.ForeignKey(Meeting, related_name='files', on_delete=models.CASCADE, blank=True, null=True)
     files=models.FileField( upload_to='files/', blank=True, null=True)
     def __str__(self):
         return self.name_file
@@ -35,8 +35,8 @@ class Order(models.Model):
 class Note(models.Model):
     text = models.TextField()
     created = models.DateTimeField(auto_now_add=True,db_index=True)
-    meeting = models.ForeignKey(Meeting, related_name='note',on_delete=models.CASCADE)
-    autor = models.ForeignKey(Profile, related_name='note', on_delete=models.SET_NULL, blank=True, null=True)
+    meeting = models.ForeignKey(Meeting, related_name='notes',on_delete=models.CASCADE)
+    autor = models.ForeignKey(Profile, related_name='notes', on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
         return self.text

@@ -6,6 +6,8 @@ from tasks.models import Task
 from rest_framework import viewsets, mixins
 from .serializers import ProfileSerializer,UserCreateSerializer, UserSerializer,FastNoteSerializer,EditFastNoteSerializer
 from tasks.serializers import TasksSerializer
+from meeting.serializers import MeetingSerializer
+from meeting.models import Meeting
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework import permissions, views, mixins
@@ -76,6 +78,21 @@ class TasksListForUserView(ListAPIView):
     def get_queryset(self):
         user=self.request.user
         return Task.objects.filter(user=user)
+
+
+#Filtro Juntas de usuario
+class MeetingListForUserView(ListAPIView):
+    serializer_class = MeetingSerializer
+
+    def get_queryset(self):
+        user=self.request.user
+        participant=Profile.objects.get(user=user)
+        meetings = Meeting.objects.all()
+
+        return Meeting.objects.filter(participants__id=participant.id)
+
+
+
 
 #Profile
 class ProfileUserView(GenericAPIView):
