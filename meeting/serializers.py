@@ -63,7 +63,7 @@ class FileSerializer(serializers.ModelSerializer):
 	def create(self,validated_data):
 		print(validated_data)
 		meeting=validated_data.pop('meeting_id')
-		files= Files.objects.create(meeting=meeting,**validated_data)
+		files= Files.objects.create	(meeting=meeting,**validated_data)
 
 		return files
 
