@@ -16,18 +16,18 @@ class MeetingSerializer(serializers.ModelSerializer):
 		fields = ['id', 'name']
 
 class EditTasksSerializer(serializers.ModelSerializer):
-	meeting = MeetingSerializer(many=False, read_only=True)
+	meeting = MeetingSerializer(many=False, read_only=True,allow_null = True)
 	user = UserSerializer(many=False, read_only=True,allow_null = True)
-	meeting_id=serializers.PrimaryKeyRelatedField(many=False,write_only=True, queryset=Meeting.objects.all(), source="meeting")
+	meeting_id=serializers.PrimaryKeyRelatedField(many=False,write_only=True, queryset=Meeting.objects.all(), source="meeting",allow_null = True)
 	user_id=serializers.PrimaryKeyRelatedField(many=False,write_only=True, queryset=User.objects.all(),source="user",allow_null = True)
 	class Meta:
 		model = Task
 		fields = '__all__'
 
 class TasksSerializer(serializers.ModelSerializer):
-	meeting = MeetingSerializer(many=False, read_only=True)
-	user = UserSerializer(many=False, read_only=True,allow_null = True)
-	meeting_id=serializers.PrimaryKeyRelatedField(many=False,write_only=True, queryset=Meeting.objects.all())
+	meeting = MeetingSerializer(many=False, read_only=True,allow_null = True)
+	user = UserSerializer(many=False, read_only=True,allow_null = True,)
+	meeting_id=serializers.PrimaryKeyRelatedField(many=False,write_only=True, queryset=Meeting.objects.all(),allow_null=True)
 	user_id=serializers.PrimaryKeyRelatedField(many=False,write_only=True, queryset=User.objects.all(),allow_null = True)
 	class Meta:
 		model = Task

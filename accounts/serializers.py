@@ -36,6 +36,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(write_only=True)
     email = EmailField(label='Email Address')
     password = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
@@ -58,12 +59,21 @@ class UserCreateSerializer(serializers.ModelSerializer):
     def validate(self, data):
         return data
 
+    def validate_username(self, value):
+        data = self.get_initial()
+        username= value
+        user_qs = User.objects.filter(username=username)
+        if user_qs.exists():
+	            raise ValidationError("Este nombre de usuario ya esta en uso")
+
+        return value
+
     def validate_email(self, value):
         data = self.get_initial()
         email= value
         user_qs = User.objects.filter(email=email)
         if user_qs.exists():
-	            raise ValidationError("This user has already registered.")
+	            raise ValidationError("Este email ya fue registrado")
 
         return value
 
@@ -72,7 +82,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         password1 = data.get("password2")
         password2 = value
         if password1 != password2:
-            raise ValidationError("Password does not match")
+            raise ValidationError("La contraseña no coincide")
         return value
 
     def validate_password2(self, value):
@@ -80,7 +90,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         password1 = data.get("password")
         password2 = value
         if password1 != password2:
-            raise ValidationError("Password does not match")
+            raise ValidationError("La contraseña no coincide")
         return value
 
     def create(self, validated_data):
