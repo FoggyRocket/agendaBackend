@@ -8,6 +8,7 @@ from .views import (
     TasksListForUserView,
     ProfileUserView,
     MeetingListForUserView,
+    ProjectListForUserView,
     )
 
 urlpatterns = [
@@ -15,4 +16,5 @@ urlpatterns = [
     url(r'^mytasks/$', TasksListForUserView.as_view(),name='mytasks'),
     url(r'^myprofile/$', ProfileUserView.as_view(),name='meprofile'),
     url(r'^mymeetings/$', MeetingListForUserView.as_view(),name='mymeetings'),
+    url(r'^myprojects/$', ProjectListForUserView.as_view(),name='myprojects'),
     ]

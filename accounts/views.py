@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from .models import Profile,FastNote
 from tasks.models import Task
-
+from project.models import Project
 #api
 from rest_framework import viewsets, mixins
 from .serializers import ProfileSerializer,UserCreateSerializer, UserSerializer,FastNoteSerializer,EditFastNoteSerializer
 from tasks.serializers import TasksSerializer
 from meeting.serializers import MeetingSerializer
+from project.serializers import ProjectSerializer
 from meeting.models import Meeting
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
@@ -91,7 +92,16 @@ class MeetingListForUserView(ListAPIView):
 
         return Meeting.objects.filter(participants__id=participant.id)
 
+#Filtro Projectos por usuario
+class ProjectListForUserView(ListAPIView):
+    serializer_class = ProjectSerializer
 
+    def get_queryset(self):
+        user=self.request.user
+        participant=Profile.objects.get(user=user)
+        project = Project.objects.all()
+
+        return Project.objects.filter(participants__id=participant.id)
 
 
 #Profile

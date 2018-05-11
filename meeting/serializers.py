@@ -42,6 +42,11 @@ class BasicActionSerializer(serializers.ModelSerializer):
 		model=Action
 		fields =["id","user","text","created"]
 
+class BasicFileSerializer(serializers.ModelSerializer):
+	class Meta:
+		model=Files
+		fields = "__all__"
+
 class BasicMeetingSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Meeting
