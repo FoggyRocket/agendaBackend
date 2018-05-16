@@ -16,10 +16,10 @@ class Task(models.Model):
 	('Q2','Q2'),
 	('Q1','Q1')
 	)
-	name =models.CharField(max_length=100, blank=True,null=True)
+	title =models.CharField(max_length=100, blank=True,null=True)
 	text = models.TextField(blank=True,null=True)
-	expiry = models.DateTimeField(auto_now_add=False, db_index=True, blank=True,null=True)
-	starts = models.DateTimeField(auto_now_add=False,db_index=True, blank=True,null=True)
+	end = models.DateTimeField(auto_now_add=False, db_index=True, blank=True,null=True)
+	start = models.DateTimeField(auto_now_add=False,db_index=True, blank=True,null=True)
 	created = models.DateTimeField(auto_now_add=True,db_index=True)
 	status = models.CharField(max_length=100, choices=STATUS, default='Activo')
 	priority = models.CharField(max_length=100, choices=PRIORITY, blank=True)
@@ -28,4 +28,4 @@ class Task(models.Model):
 	meeting = models.ForeignKey(Meeting, related_name='tasks', on_delete=models.CASCADE,blank=True, null=True)
 
 	def __str__(self):
-		return self.name
+		return self.title
