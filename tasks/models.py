@@ -23,6 +23,7 @@ class Task(models.Model):
 	created = models.DateTimeField(auto_now_add=True,db_index=True)
 	status = models.CharField(max_length=100, choices=STATUS, default='Activo')
 	priority = models.CharField(max_length=100, choices=PRIORITY, blank=True)
+	allDay = models.BooleanField(default=True)
 	user = models.ForeignKey(User, related_name='tasks', on_delete=models.SET_NULL, blank=True, null=True)
 	project = models.ForeignKey(Project, related_name='tasks', on_delete=models.CASCADE,blank=True, null=True)
 	meeting = models.ForeignKey(Meeting, related_name='tasks', on_delete=models.CASCADE,blank=True, null=True)
